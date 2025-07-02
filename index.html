@@ -12,7 +12,7 @@
         }
         
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #F4E4BC 0%, #F0D58C 50%, #E6CC7A 100%);
             min-height: 100vh;
             font-family: 'Arial', sans-serif;
             overflow-x: auto;
@@ -27,13 +27,25 @@
         .header {
             text-align: center;
             margin-bottom: 40px;
-            color: white;
+            color: #5D4E37;
         }
         
         .header h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #6B5B47;
+        }
+        
+        .made-by {
+            font-size: 0.9rem;
+            color: #8B7355;
+            font-style: italic;
         }
         
         .skill-tree {
@@ -44,31 +56,33 @@
         }
         
         .career-path {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid #D4AF37;
             transition: all 0.3s ease;
             position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
         
         .career-path:hover {
             transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.8);
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
         
         .career-title {
             text-align: center;
-            color: white;
+            color: #5D4E37;
             font-size: 1.4rem;
             font-weight: bold;
             margin-bottom: 20px;
             padding: 10px;
-            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            background: rgba(212, 175, 55, 0.3);
             border-radius: 10px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            border: 1px solid #D4AF37;
         }
         
         .skills-category {
@@ -76,30 +90,30 @@
         }
         
         .category-title {
-            color: #ffd700;
+            color: #8B7355;
             font-size: 1rem;
             font-weight: bold;
             margin-bottom: 10px;
             padding: 5px 10px;
-            background: rgba(255, 215, 0, 0.1);
+            background: rgba(228, 205, 144, 0.4);
             border-radius: 5px;
-            border-left: 3px solid #ffd700;
+            border-left: 3px solid #D4AF37;
         }
         
         .skill-item {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
+            background: rgba(240, 213, 140, 0.4);
+            color: #5D4E37;
             padding: 8px 12px;
             margin: 5px 0;
             border-radius: 8px;
             font-size: 0.9rem;
             transition: all 0.2s ease;
             cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
         }
         
         .skill-item:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(212, 175, 55, 0.5);
             transform: scale(1.05);
         }
         
@@ -107,64 +121,75 @@
             text-align: center;
             margin-top: 15px;
             padding: 10px;
-            background: linear-gradient(45deg, #00c851, #007e33);
+            background: rgba(107, 142, 35, 0.7);
             border-radius: 10px;
             color: white;
             font-weight: bold;
+            border: 1px solid #6B8E23;
         }
         
         .connection-line {
             position: absolute;
             height: 3px;
-            background: linear-gradient(90deg, #ffd700, #ff6b6b);
+            background: linear-gradient(90deg, #D4AF37, #E6CC7A);
             top: 50%;
             z-index: 1;
-            opacity: 0.7;
+            opacity: 0.6;
+            transform: translateY(-50%);
+            display: none; /* 預設隱藏，只在大螢幕顯示 */
         }
         
-        .line1 { left: 25%; width: 25%; }
-        .line2 { left: 50%; width: 25%; }
-        .line3 { left: 75%; width: 25%; }
+        /* 只在大螢幕顯示連接線 */
+        @media (min-width: 1400px) {
+            .connection-line {
+                display: block;
+            }
+            .line1 { left: 22%; width: 28%; }
+            .line2 { left: 47%; width: 28%; }
+            .line3 { left: 72%; width: 28%; }
+        }
         
         .special-path {
             grid-column: span 4;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
-            color: #333;
+            background: rgba(255, 255, 255, 0.8);
+            color: #5D4E37;
             margin-top: 20px;
+            border: 2px solid #B8860B;
         }
         
         .special-path .career-title {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
+            background: rgba(184, 134, 11, 0.3);
+            color: #5D4E37;
+            border-color: #B8860B;
         }
         
         .special-path .category-title {
-            color: #667eea;
-            background: rgba(102, 126, 234, 0.1);
-            border-left-color: #667eea;
+            color: #8B7355;
+            background: rgba(184, 134, 11, 0.2);
+            border-left-color: #D4AF37;
         }
         
         .special-path .skill-item {
-            background: rgba(102, 126, 234, 0.1);
-            color: #333;
-            border-color: rgba(102, 126, 234, 0.2);
+            background: rgba(184, 134, 11, 0.2);
+            color: #5D4E37;
+            border-color: rgba(212, 175, 55, 0.4);
         }
         
         .special-path .skill-item:hover {
-            background: rgba(102, 126, 234, 0.2);
+            background: rgba(212, 175, 55, 0.4);
         }
         
         .recommendation {
-            background: rgba(255, 193, 7, 0.1);
-            border: 2px solid #ffc107;
+            background: rgba(255, 255, 255, 0.6);
+            border: 2px solid #D4AF37;
             border-radius: 15px;
             padding: 20px;
             margin-top: 30px;
-            color: white;
+            color: #5D4E37;
         }
         
         .recommendation h3 {
-            color: #ffc107;
+            color: #B8860B;
             margin-bottom: 15px;
         }
         
@@ -172,7 +197,6 @@
             .skill-tree {
                 grid-template-columns: repeat(2, 1fr);
             }
-            .connection-line { display: none; }
         }
         
         @media (max-width: 768px) {
@@ -189,17 +213,18 @@
         
         /* 表單樣式 */
         .analysis-form {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 30px;
             margin-bottom: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
+            border: 2px solid #D4AF37;
+            color: #5D4E37;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
         
         .analysis-form h3 {
-            color: #ffd700;
+            color: #B8860B;
             font-size: 1.5rem;
             margin-bottom: 10px;
             text-align: center;
@@ -208,7 +233,8 @@
         .analysis-form p {
             text-align: center;
             margin-bottom: 25px;
-            opacity: 0.9;
+            opacity: 0.8;
+            color: #6B5B47;
         }
         
         .form-grid {
@@ -224,7 +250,7 @@
         }
         
         .form-group label {
-            color: #ffd700;
+            color: #8B7355;
             font-weight: bold;
             margin-bottom: 8px;
             font-size: 0.9rem;
@@ -233,29 +259,29 @@
         .form-group select {
             padding: 12px;
             border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
+            border: 1px solid #D4AF37;
+            background: rgba(255, 255, 255, 0.8);
+            color: #5D4E37;
             font-size: 0.9rem;
             transition: all 0.3s ease;
         }
         
         .form-group select:focus {
             outline: none;
-            border-color: #ffd700;
-            background: rgba(255, 255, 255, 0.2);
+            border-color: #B8860B;
+            background: rgba(255, 255, 255, 0.9);
         }
         
         .form-group select option {
-            background: #333;
-            color: white;
+            background: #FFFAF0;
+            color: #5D4E37;
         }
         
         .analyze-btn {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(45deg, #ffd700, #ff6b6b);
-            border: none;
+            background: rgba(184, 134, 11, 0.8);
+            border: 2px solid #B8860B;
             border-radius: 10px;
             color: white;
             font-size: 1.1rem;
@@ -266,7 +292,8 @@
         
         .analyze-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+            background: rgba(212, 175, 55, 0.9);
+            box-shadow: 0 10px 20px rgba(184, 134, 11, 0.3);
         }
         
         .analyze-btn:active {
@@ -275,33 +302,34 @@
         
         /* 分析結果樣式 */
         .analysis-result {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: rgba(255, 255, 255, 0.8);
             border-radius: 20px;
             padding: 30px;
             margin-bottom: 30px;
-            color: white;
-            border: 2px solid #ffd700;
+            color: #5D4E37;
+            border: 2px solid #B8860B;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
         
         .analysis-result h3 {
-            color: #ffd700;
+            color: #B8860B;
             font-size: 1.5rem;
             margin-bottom: 20px;
             text-align: center;
         }
         
         .path-score {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(240, 213, 140, 0.4);
             border-radius: 10px;
             padding: 15px;
             margin: 10px 0;
-            border-left: 4px solid #ffd700;
+            border-left: 4px solid #D4AF37;
         }
         
         .score-bar {
             width: 100%;
             height: 10px;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(212, 175, 55, 0.3);
             border-radius: 5px;
             margin: 8px 0;
             overflow: hidden;
@@ -309,27 +337,27 @@
         
         .score-fill {
             height: 100%;
-            background: linear-gradient(90deg, #ffd700, #ff6b6b);
+            background: linear-gradient(90deg, #D4AF37, #B8860B);
             border-radius: 5px;
             transition: width 0.8s ease;
         }
         
         .best-match {
-            border-left-color: #00c851;
-            background: rgba(0, 200, 81, 0.1);
+            border-left-color: #6B8E23;
+            background: rgba(107, 142, 35, 0.2);
         }
         
         .action-item {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(240, 213, 140, 0.4);
             border-radius: 8px;
             padding: 12px;
             margin: 8px 0;
-            border-left: 3px solid #ffd700;
+            border-left: 3px solid #D4AF37;
         }
         
         .highlight {
-            background: rgba(255, 215, 0, 0.2);
-            border-color: #ffd700;
+            background: rgba(212, 175, 55, 0.4) !important;
+            border-color: #D4AF37 !important;
         }
     </style>
 </head>
@@ -338,6 +366,7 @@
         <div class="header">
             <h1>🚀 IT 工程師技能樹發展路徑</h1>
             <p>從全端工程師到資安專家的職業發展藍圖</p>
+            <div class="made-by">Made by 飛飛與 Claude.ai</div>
         </div>
         
         <div class="skill-tree">
@@ -417,7 +446,7 @@
                     <div class="category-title">安全技術</div>
                     <div class="skill-item">滲透測試</div>
                     <div class="skill-item">弱點掃描</div>
-                    <div class="skill-item">惡意軟體分析</div>
+                    <div class="skill-item">惡意程式分析</div>
                     <div class="skill-item">事件回應</div>
                 </div>
                 
@@ -516,13 +545,13 @@
                         <label>目前職位/背景</label>
                         <select id="currentRole">
                             <option value="">請選擇</option>
-                            <option value="student">學生/新鮮人</option>
+                            <option value="student">學生/社會新鮮人</option>
                             <option value="frontend">前端工程師</option>
                             <option value="backend">後端工程師</option>
                             <option value="fullstack">全端工程師</option>
                             <option value="network">網路工程師</option>
                             <option value="security">資安相關</option>
-                            <option value="it-support">IT支援/系統管理</option>
+                            <option value="it-support">IT支援/系統管理員</option>
                             <option value="other">其他技術職</option>
                         </select>
                     </div>
@@ -531,7 +560,7 @@
                         <label>工作經驗</label>
                         <select id="experience">
                             <option value="">請選擇</option>
-                            <option value="0">0年 (新鮮人)</option>
+                            <option value="0">0年 (社會新鮮人)</option>
                             <option value="1-2">1-2年</option>
                             <option value="3-5">3-5年</option>
                             <option value="5+">5年以上</option>
@@ -620,8 +649,8 @@
             <h3>💡 一般職業發展建議</h3>
             <p><strong>循序漸進路徑 vs 直接專精路徑：</strong></p>
             <ul style="margin: 10px 0; padding-left: 20px;">
-                <li><strong>循序漸進優勢：</strong>技術基礎扎實、理解系統全貌、解決問題能力強、職業穩定性高</li>
-                <li><strong>直接專精優勢：</strong>快速進入高薪領域、符合市場需求、學習目標明確、ROI較高</li>
+                <li><strong>循序漸進優勢：</strong>技術基礎紮實、理解系統全貌、解決問題能力強、職業穩定性高</li>
+                <li><strong>直接專精優勢：</strong>快速進入高薪領域、符合市場需求、學習目標明確、投資報酬率較高</li>
             </ul>
             <p><strong>建議：</strong>使用上方的個人化分析工具，獲得專屬於您的職涯建議！</p>
         </div>
@@ -631,7 +660,7 @@
         // 新增技能項目點擊效果
         document.querySelectorAll('.skill-item').forEach(item => {
             item.addEventListener('click', function() {
-                this.style.background = 'rgba(255, 215, 0, 0.3)';
+                this.style.background = 'rgba(212, 175, 55, 0.7)';
                 setTimeout(() => {
                     this.style.background = '';
                 }, 1000);
@@ -692,7 +721,7 @@
             switch(data.currentRole) {
                 case 'student':
                     paths.direct.score += 25;
-                    paths.direct.reasons.push('新鮮人適合直接學習最新技術');
+                    paths.direct.reasons.push('社會新鮮人適合直接學習最新技術');
                     break;
                 case 'frontend':
                 case 'backend':
@@ -721,7 +750,7 @@
             switch(data.experience) {
                 case '0':
                     paths.direct.score += 20;
-                    paths.direct.reasons.push('新鮮人可直接學習熱門技術');
+                    paths.direct.reasons.push('社會新鮮人可直接學習熱門技術');
                     break;
                 case '1-2':
                     paths.direct.score += 15;
@@ -959,7 +988,7 @@
                 ${actionPlans[bestKey].map(action => `
                     <div class="action-item">${action}</div>
                 `).join('')}
-                <div style="margin-top: 15px; padding: 15px; background: rgba(255, 215, 0, 0.1); border-radius: 10px;">
+                <div style="margin-top: 15px; padding: 15px; background: rgba(240, 213, 140, 0.3); border-radius: 10px;">
                     <strong>💡 額外建議：</strong> 無論選擇哪條路徑，持續學習和實作都是關鍵。建議加入相關技術社群，參與開源專案，並定期更新履歷展示您的成長。
                 </div>
             `;
