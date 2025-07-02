@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT 工程師技能樹</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            overflow-x: auto;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .skill-tree {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            position: relative;
+        }
+        
+        .career-path {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .career-path:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .career-title {
+            text-align: center;
+            color: white;
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            border-radius: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .skills-category {
+            margin-bottom: 20px;
+        }
+        
+        .category-title {
+            color: #ffd700;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding: 5px 10px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 5px;
+            border-left: 3px solid #ffd700;
+        }
+        
+        .skill-item {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .skill-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+        
+        .salary-indicator {
+            text-align: center;
+            margin-top: 15px;
+            padding: 10px;
+            background: linear-gradient(45deg, #00c851, #007e33);
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .connection-line {
+            position: absolute;
+            height: 3px;
+            background: linear-gradient(90deg, #ffd700, #ff6b6b);
+            top: 50%;
+            z-index: 1;
+            opacity: 0.7;
+        }
+        
+        .line1 { left: 25%; width: 25%; }
+        .line2 { left: 50%; width: 25%; }
+        .line3 { left: 75%; width: 25%; }
+        
+        .special-path {
+            grid-column: span 4;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            color: #333;
+            margin-top: 20px;
+        }
+        
+        .special-path .career-title {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .special-path .category-title {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            border-left-color: #667eea;
+        }
+        
+        .special-path .skill-item {
+            background: rgba(102, 126, 234, 0.1);
+            color: #333;
+            border-color: rgba(102, 126, 234, 0.2);
+        }
+        
+        .special-path .skill-item:hover {
+            background: rgba(102, 126, 234, 0.2);
+        }
+        
+        .recommendation {
+            background: rgba(255, 193, 7, 0.1);
+            border: 2px solid #ffc107;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+            color: white;
+        }
+        
+        .recommendation h3 {
+            color: #ffc107;
+            margin-bottom: 15px;
+        }
+        
+        @media (max-width: 1200px) {
+            .skill-tree {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .connection-line { display: none; }
+        }
+        
+        @media (max-width: 768px) {
+            .skill-tree {
+                grid-template-columns: 1fr;
+            }
+            .special-path {
+                grid-column: span 1;
+            }
+            .form-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+        
+        /* 表單樣式 */
+        .analysis-form {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        .analysis-form h3 {
+            color: #ffd700;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .analysis-form p {
+            text-align: center;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            color: #ffd700;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .form-group select {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group select:focus {
+            outline: none;
+            border-color: #ffd700;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .form-group select option {
+            background: #333;
+            color: white;
+        }
+        
+        .analyze-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #ffd700, #ff6b6b);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+        }
+        
+        .analyze-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* 分析結果樣式 */
+        .analysis-result {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            color: white;
+            border: 2px solid #ffd700;
+        }
+        
+        .analysis-result h3 {
+            color: #ffd700;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .path-score {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #ffd700;
+        }
+        
+        .score-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            margin: 8px 0;
+            overflow: hidden;
+        }
+        
+        .score-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ffd700, #ff6b6b);
+            border-radius: 5px;
+            transition: width 0.8s ease;
+        }
+        
+        .best-match {
+            border-left-color: #00c851;
+            background: rgba(0, 200, 81, 0.1);
+        }
+        
+        .action-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            margin: 8px 0;
+            border-left: 3px solid #ffd700;
+        }
+        
+        .highlight {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 IT 工程師技能樹發展路徑</h1>
+            <p>從全端工程師到資安專家的職業發展藍圖</p>
+        </div>
+        
+        <div class="skill-tree">
+            <!-- 連接線 -->
+            <div class="connection-line line1"></div>
+            <div class="connection-line line2"></div>
+            <div class="connection-line line3"></div>
+            
+            <!-- 全端工程師 -->
+            <div class="career-path">
+                <div class="career-title">🎯 全端工程師</div>
+                
+                <div class="skills-category">
+                    <div class="category-title">前端技術</div>
+                    <div class="skill-item">HTML/CSS/JavaScript</div>
+                    <div class="skill-item">React/Vue/Angular</div>
+                    <div class="skill-item">TypeScript</div>
+                    <div class="skill-item">響應式設計</div>
+                </div>
+                
+                <div class="skills-category">
+                    <div class="category-title">後端技術</div>
+                    <div class="skill-item">Node.js/Python/Java</div>
+                    <div class="skill-item">RESTful API</div>
+                    <div class="skill-item">資料庫設計</div>
+                    <div class="skill-item">微服務架構</div>
+                </div>
+                
+                <div class="skills-category">
+                    <div class="category-title">開發工具</div>
+                    <div class="skill-item">Git版本控制</div>
+                    <div class="skill-item">Docker容器化</div>
+                    <div class="skill-item">CI/CD部署</div>
+                </div>
+                
+                <div class="salary-indicator">
+                    💰 薪資範圍: 60-120萬/年
+                </div>
+            </div>
+            
+            <!-- 網路工程師 -->
+            <div class="career-path">
+                <div class="career-title">🌐 網路工程師</div>
+                
+                <div class="skills-category">
+                    <div class="category-title">網路基礎</div>
+                    <div class="skill-item">TCP/IP協定</div>
+                    <div class="skill-item">路由交換技術</div>
+                    <div class="skill-item">VLAN 設定</div>
+                    <div class="skill-item">網路拓撲設計</div>
+                </div>
+                
+                <div class="skills-category">
+                    <div class="category-title">設備管理</div>
+                    <div class="skill-item">Cisco/Juniper</div>
+                    <div class="skill-item">防火牆設定</div>
+                    <div class="skill-item">負載平衡器</div>
+                    <div class="skill-item">網路監控</div>
+                </div>
+                
+                <div class="skills-category">
+                    <div class="category-title">認證證照</div>
+                    <div class="skill-item">CCNA/CCNP</div>
+                    <div class="skill-item">網路架構師</div>
+                </div>
+                
+                <div class="salary-indicator">
+                    💰 薪資範圍: 70-140萬/年
+                </div>
+            </div>
+            
+            <!-- 資安工程師 -->
+            <div class="career-path">
+                <div class="career-title">🛡️ 資安工程師</div>
+                
+                <div class="skills-category">
+                    <div class="category-title">安全技術</div>
+                    <div class="skill-item">滲透測試</div>
+                    <div class="skill-item">弱點掃描</div>
+                    <div class="skill-item">惡意軟體分析</div>
+                    <div class="skill-item">事件回應</div>
+                </div>
+                
+                <div class="skills-category">
+                    <div class="category-title">安全工具</div>
+                    <div class="skill-item">SIEM系統</div>
+                    <div class="skill-item">IDS/IPS</div>
+                    <div class="skill-item">加密技術</div>
+                    <div class="skill-item">身份驗證</div>
+                </div>
+                
+                <div class="skills-category">
+                    <div class="category-title">合規認證</div>
+                    <div class="skill-item">ISO 27001</div>
+                    <div class="skill-item">CISSP/CEH</div>
+                    <div class="skill-item">個資法合規</div>
+                </div>
+                
+                <div class="salary-indicator">
+                    💰 薪資範圍: 90-200萬/年
+                </div>
+            </div>
+            
+            <!-- 高階整合專家 -->
+            <div class="career-path">
+                <div class="career-title">⭐ 高階整合專家</div>
+                
+                <div class="skills-category">
+                    <div class="category-title">架構設計</div>
+                    <div class="skill-item">企業架構師</div>
+                    <div class="skill-item">解決方案架構</div>
+                    <div class="skill-item">技術領導</div>
+                    <div class="skill-item">專案管理</div>
+                </div>
+                
+                <div class="skills-category">
+                    <div class="category-title">業務整合</div>
+                    <div class="skill-item">需求分析</div>
+                    <div class="skill-item">成本效益評估</div>
+                    <div class="skill-item">風險管理</div>
+                    <div class="skill-item">團隊領導</div>
+                </div>
+                
+                <div class="salary-indicator">
+                    💰 薪資範圍: 150-300萬/年
+                </div>
+            </div>
+            
+            <!-- 雲端網工暨資安專家 -->
+            <div class="career-path special-path">
+                <div class="career-title">☁️ 雲端網工暨資安專家 (直接路徑)</div>
+                
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                    <div class="skills-category">
+                        <div class="category-title">雲端平台</div>
+                        <div class="skill-item">AWS/Azure/GCP</div>
+                        <div class="skill-item">雲端架構設計</div>
+                        <div class="skill-item">容器 Docker/K8s</div>
+                        <div class="skill-item">IaC (Terraform)</div>
+                        <div class="skill-item">DevOps流程</div>
+                    </div>
+                    
+                    <div class="skills-category">
+                        <div class="category-title">雲端網路</div>
+                        <div class="skill-item">虛擬私有雲 VPC</div>
+                        <div class="skill-item">CDN內容分發</div>
+                        <div class="skill-item">API Gateway</div>
+                        <div class="skill-item">服務網格</div>
+                        <div class="skill-item">混合雲連接</div>
+                    </div>
+                    
+                    <div class="skills-category">
+                        <div class="category-title">雲端資安</div>
+                        <div class="skill-item">雲端身份管理 IAM</div>
+                        <div class="skill-item">雲端安全中心</div>
+                        <div class="skill-item">合規性監控</div>
+                        <div class="skill-item">零信任架構</div>
+                        <div class="skill-item">雲端 SIEM</div>
+                    </div>
+                </div>
+                
+                <div class="salary-indicator">
+                    💰 薪資範圍: 120-250萬/年 (快速上手高薪職位)
+                </div>
+            </div>
+        </div>
+        
+        <!-- 個人背景分析表單 -->
+        <div class="analysis-form">
+            <h3>🎯 個人化職涯路徑分析</h3>
+            <p>請填寫您的背景資訊，我們將為您推薦最適合的發展路徑</p>
+            
+            <form id="careerForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>目前職位/背景</label>
+                        <select id="currentRole">
+                            <option value="">請選擇</option>
+                            <option value="student">學生/新鮮人</option>
+                            <option value="frontend">前端工程師</option>
+                            <option value="backend">後端工程師</option>
+                            <option value="fullstack">全端工程師</option>
+                            <option value="network">網路工程師</option>
+                            <option value="security">資安相關</option>
+                            <option value="it-support">IT支援/系統管理</option>
+                            <option value="other">其他技術職</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>工作經驗</label>
+                        <select id="experience">
+                            <option value="">請選擇</option>
+                            <option value="0">0年 (新鮮人)</option>
+                            <option value="1-2">1-2年</option>
+                            <option value="3-5">3-5年</option>
+                            <option value="5+">5年以上</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>程式開發能力</label>
+                        <select id="programmingSkill">
+                            <option value="">請選擇</option>
+                            <option value="none">完全不會</option>
+                            <option value="basic">基礎 (HTML/CSS)</option>
+                            <option value="intermediate">中等 (JavaScript/Python)</option>
+                            <option value="advanced">進階 (多語言/框架)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>網路知識程度</label>
+                        <select id="networkKnowledge">
+                            <option value="">請選擇</option>
+                            <option value="none">完全不懂</option>
+                            <option value="basic">基礎 (TCP/IP概念)</option>
+                            <option value="intermediate">中等 (路由交換)</option>
+                            <option value="advanced">進階 (網路架構設計)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>資安知識程度</label>
+                        <select id="securityKnowledge">
+                            <option value="">請選擇</option>
+                            <option value="none">完全不懂</option>
+                            <option value="basic">基礎 (基本概念)</option>
+                            <option value="intermediate">中等 (防火牆/弱掃)</option>
+                            <option value="advanced">進階 (滲透測試)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>學習時間投入</label>
+                        <select id="timeCommitment">
+                            <option value="">請選擇</option>
+                            <option value="part-time">兼職學習 (每週10小時以下)</option>
+                            <option value="regular">一般投入 (每週10-20小時)</option>
+                            <option value="intensive">全力投入 (每週20小時以上)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>薪資期望 (年薪)</label>
+                        <select id="salaryExpectation">
+                            <option value="">請選擇</option>
+                            <option value="60-80">60-80萬</option>
+                            <option value="80-120">80-120萬</option>
+                            <option value="120-180">120-180萬</option>
+                            <option value="180+">180萬以上</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>興趣偏好</label>
+                        <select id="interest">
+                            <option value="">請選擇</option>
+                            <option value="development">開發創造</option>
+                            <option value="infrastructure">基礎架構</option>
+                            <option value="security">安全防護</option>
+                            <option value="management">技術管理</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button type="button" id="analyzeBtn" class="analyze-btn">🔍 分析我的最佳路徑</button>
+            </form>
+        </div>
+        
+        <!-- 分析結果顯示區 -->
+        <div id="analysisResult" class="analysis-result" style="display: none;">
+            <h3>📊 您的個人化分析結果</h3>
+            <div id="recommendationContent"></div>
+            <div id="pathScores"></div>
+            <div id="actionPlan"></div>
+        </div>
+        
+        <div class="recommendation">
+            <h3>💡 一般職業發展建議</h3>
+            <p><strong>循序漸進路徑 vs 直接專精路徑：</strong></p>
+            <ul style="margin: 10px 0; padding-left: 20px;">
+                <li><strong>循序漸進優勢：</strong>技術基礎扎實、理解系統全貌、解決問題能力強、職業穩定性高</li>
+                <li><strong>直接專精優勢：</strong>快速進入高薪領域、符合市場需求、學習目標明確、ROI較高</li>
+            </ul>
+            <p><strong>建議：</strong>使用上方的個人化分析工具，獲得專屬於您的職涯建議！</p>
+        </div>
+    </div>
+    
+    <script>
+        // 新增技能項目點擊效果
+        document.querySelectorAll('.skill-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.style.background = 'rgba(255, 215, 0, 0.3)';
+                setTimeout(() => {
+                    this.style.background = '';
+                }, 1000);
+            });
+        });
+        
+        // 新增滾動動畫效果
+        window.addEventListener('scroll', () => {
+            const paths = document.querySelectorAll('.career-path');
+            paths.forEach(path => {
+                const rect = path.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    path.style.opacity = '1';
+                    path.style.transform = 'translateY(0)';
+                }
+            });
+        });
+        
+        // 職涯分析邏輯
+        document.getElementById('analyzeBtn').addEventListener('click', function() {
+            const formData = {
+                currentRole: document.getElementById('currentRole').value,
+                experience: document.getElementById('experience').value,
+                programmingSkill: document.getElementById('programmingSkill').value,
+                networkKnowledge: document.getElementById('networkKnowledge').value,
+                securityKnowledge: document.getElementById('securityKnowledge').value,
+                timeCommitment: document.getElementById('timeCommitment').value,
+                salaryExpectation: document.getElementById('salaryExpectation').value,
+                interest: document.getElementById('interest').value
+            };
+            
+            // 檢查是否所有欄位都已填寫
+            const missingFields = Object.entries(formData).filter(([key, value]) => !value);
+            if (missingFields.length > 0) {
+                alert('請填寫所有欄位再進行分析！');
+                return;
+            }
+            
+            const analysis = analyzeCareerPath(formData);
+            displayAnalysisResult(analysis);
+            
+            // 滾動到結果區域
+            document.getElementById('analysisResult').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        });
+        
+        function analyzeCareerPath(data) {
+            const paths = {
+                progressive: { name: '循序漸進路徑 (全端→網工→資安)', score: 0, reasons: [] },
+                direct: { name: '直接專精路徑 (雲端網工暨資安)', score: 0, reasons: [] },
+                fullstack: { name: '深化全端開發', score: 0, reasons: [] },
+                network: { name: '專精網路工程', score: 0, reasons: [] }
+            };
+            
+            // 根據目前職位評分
+            switch(data.currentRole) {
+                case 'student':
+                    paths.direct.score += 25;
+                    paths.direct.reasons.push('新鮮人適合直接學習最新技術');
+                    break;
+                case 'frontend':
+                case 'backend':
+                    paths.progressive.score += 20;
+                    paths.fullstack.score += 30;
+                    paths.progressive.reasons.push('有開發基礎，適合逐步擴展技能');
+                    break;
+                case 'fullstack':
+                    paths.progressive.score += 30;
+                    paths.direct.score += 20;
+                    paths.progressive.reasons.push('全端經驗是最佳基礎');
+                    break;
+                case 'network':
+                    paths.network.score += 35;
+                    paths.progressive.score += 25;
+                    paths.network.reasons.push('網路經驗是寶貴資產');
+                    break;
+                case 'security':
+                    paths.direct.score += 35;
+                    paths.progressive.score += 20;
+                    paths.direct.reasons.push('已有資安基礎，雲端是自然延伸');
+                    break;
+            }
+            
+            // 根據經驗年數評分
+            switch(data.experience) {
+                case '0':
+                    paths.direct.score += 20;
+                    paths.direct.reasons.push('新鮮人可直接學習熱門技術');
+                    break;
+                case '1-2':
+                    paths.direct.score += 15;
+                    paths.progressive.score += 15;
+                    break;
+                case '3-5':
+                    paths.progressive.score += 20;
+                    paths.progressive.reasons.push('有經驗基礎，適合系統性發展');
+                    break;
+                case '5+':
+                    paths.progressive.score += 25;
+                    paths.progressive.reasons.push('豐富經驗讓您能整合各領域知識');
+                    break;
+            }
+            
+            // 根據程式能力評分
+            switch(data.programmingSkill) {
+                case 'none':
+                    paths.network.score += 20;
+                    paths.network.reasons.push('可從網路基礎開始建立');
+                    break;
+                case 'basic':
+                    paths.progressive.score += 15;
+                    paths.direct.score += 10;
+                    break;
+                case 'intermediate':
+                    paths.progressive.score += 20;
+                    paths.direct.score += 25;
+                    paths.fullstack.score += 20;
+                    paths.direct.reasons.push('程式基礎讓您更快理解雲端自動化');
+                    break;
+                case 'advanced':
+                    paths.progressive.score += 15;
+                    paths.direct.score += 30;
+                    paths.fullstack.score += 25;
+                    paths.direct.reasons.push('強程式能力是雲端專家的關鍵優勢');
+                    break;
+            }
+            
+            // 根據網路知識評分
+            switch(data.networkKnowledge) {
+                case 'none':
+                    paths.direct.score += 15;
+                    paths.direct.reasons.push('雲端抽象化讓您無需深入底層網路');
+                    break;
+                case 'basic':
+                    paths.progressive.score += 15;
+                    paths.direct.score += 10;
+                    break;
+                case 'intermediate':
+                    paths.progressive.score += 25;
+                    paths.network.score += 30;
+                    paths.progressive.reasons.push('網路知識是職涯發展的強力支撐');
+                    break;
+                case 'advanced':
+                    paths.progressive.score += 20;
+                    paths.network.score += 35;
+                    paths.direct.score += 25;
+                    paths.network.reasons.push('深度網路知識讓您成為稀有人才');
+                    break;
+            }
+            
+            // 根據資安知識評分
+            switch(data.securityKnowledge) {
+                case 'none':
+                    paths.progressive.score += 15;
+                    paths.progressive.reasons.push('循序漸進學習資安更紮實');
+                    break;
+                case 'basic':
+                    paths.progressive.score += 10;
+                    paths.direct.score += 15;
+                    break;
+                case 'intermediate':
+                    paths.direct.score += 25;
+                    paths.progressive.score += 20;
+                    paths.direct.reasons.push('資安基礎讓您快速掌握雲端安全');
+                    break;
+                case 'advanced':
+                    paths.direct.score += 30;
+                    paths.progressive.score += 15;
+                    paths.direct.reasons.push('進階資安知識在雲端時代價值倍增');
+                    break;
+            }
+            
+            // 根據學習時間投入評分
+            switch(data.timeCommitment) {
+                case 'part-time':
+                    paths.progressive.score += 20;
+                    paths.progressive.reasons.push('循序漸進適合兼職學習');
+                    break;
+                case 'regular':
+                    paths.progressive.score += 15;
+                    paths.direct.score += 15;
+                    break;
+                case 'intensive':
+                    paths.direct.score += 25;
+                    paths.direct.reasons.push('全力投入能快速掌握雲端技術');
+                    break;
+            }
+            
+            // 根據薪資期望評分
+            switch(data.salaryExpectation) {
+                case '60-80':
+                    paths.progressive.score += 10;
+                    paths.fullstack.score += 15;
+                    break;
+                case '80-120':
+                    paths.progressive.score += 15;
+                    paths.direct.score += 10;
+                    break;
+                case '120-180':
+                    paths.direct.score += 25;
+                    paths.progressive.score += 10;
+                    paths.direct.reasons.push('雲端專家薪資符合您的期望');
+                    break;
+                case '180+':
+                    paths.direct.score += 30;
+                    paths.progressive.score += 20;
+                    paths.direct.reasons.push('高薪資需求最適合雲端領域');
+                    break;
+            }
+            
+            // 根據興趣偏好評分
+            switch(data.interest) {
+                case 'development':
+                    paths.fullstack.score += 30;
+                    paths.progressive.score += 20;
+                    paths.fullstack.reasons.push('開發興趣讓您適合深化程式技能');
+                    break;
+                case 'infrastructure':
+                    paths.direct.score += 30;
+                    paths.network.score += 25;
+                    paths.direct.reasons.push('基礎架構興趣完美契合雲端領域');
+                    break;
+                case 'security':
+                    paths.direct.score += 25;
+                    paths.progressive.score += 30;
+                    paths.progressive.reasons.push('資安興趣適合系統性學習');
+                    break;
+                case 'management':
+                    paths.progressive.score += 25;
+                    paths.progressive.reasons.push('管理傾向需要全方位技術基礎');
+                    break;
+            }
+            
+            // 正規化分數到100分制
+            Object.keys(paths).forEach(key => {
+                paths[key].score = Math.min(100, paths[key].score);
+            });
+            
+            return paths;
+        }
+        
+        function displayAnalysisResult(analysis) {
+            const resultDiv = document.getElementById('analysisResult');
+            const contentDiv = document.getElementById('recommendationContent');
+            const scoresDiv = document.getElementById('pathScores');
+            const actionDiv = document.getElementById('actionPlan');
+            
+            // 找出最高分路徑
+            const sortedPaths = Object.entries(analysis)
+                .sort(([,a], [,b]) => b.score - a.score);
+            
+            const bestPath = sortedPaths[0];
+            const [bestKey, bestData] = bestPath;
+            
+            // 顯示推薦結果
+            contentDiv.innerHTML = `
+                <div class="path-score best-match">
+                    <h4>🎯 最推薦路徑：${bestData.name}</h4>
+                    <div class="score-bar">
+                        <div class="score-fill" style="width: ${bestData.score}%"></div>
+                    </div>
+                    <p><strong>適合度：${bestData.score}分</strong></p>
+                    <div style="margin-top: 10px;">
+                        <strong>推薦理由：</strong>
+                        <ul style="margin: 5px 0; padding-left: 20px;">
+                            ${bestData.reasons.map(reason => `<li>${reason}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            // 顯示所有路徑分數
+            scoresDiv.innerHTML = `
+                <h4>📊 各路徑適合度分析</h4>
+                ${sortedPaths.map(([key, data]) => `
+                    <div class="path-score ${key === bestKey ? 'best-match' : ''}">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>${data.name}</span>
+                            <span><strong>${data.score}分</strong></span>
+                        </div>
+                        <div class="score-bar">
+                            <div class="score-fill" style="width: ${data.score}%"></div>
+                        </div>
+                    </div>
+                `).join('')}
+            `;
+            
+            // 提供行動計劃
+            const actionPlans = {
+                progressive: [
+                    '建議先深化現有技能，成為該領域專家',
+                    '同步學習網路基礎知識，建立系統觀念',
+                    '逐步接觸資安相關技術和工具',
+                    '考慮取得相關認證提升競爭力',
+                    '尋找跨領域專案累積整合經驗'
+                ],
+                direct: [
+                    '選擇一個主要雲端平台開始學習 (建議AWS)',
+                    '先取得雲端基礎認證 (如AWS Certified Solutions Architect)',
+                    '實作雲端專案，建立實務經驗',
+                    '學習Infrastructure as Code (Terraform/CloudFormation)',
+                    '進修雲端安全專業認證',
+                    '關注雲端趨勢，持續學習新服務'
+                ],
+                fullstack: [
+                    '深化前後端技術，成為特定框架專家',
+                    '學習微服務架構和容器化技術',
+                    '掌握DevOps流程和工具',
+                    '提升系統設計和架構能力',
+                    '考慮往技術主管方向發展'
+                ],
+                network: [
+                    '取得Cisco或其他廠商的網路認證',
+                    '深入學習企業網路架構設計',
+                    '掌握網路安全和監控技術',
+                    '學習軟體定義網路(SDN)概念',
+                    '關注5G和邊緣運算趨勢'
+                ]
+            };
+            
+            actionDiv.innerHTML = `
+                <h4>🚀 您的行動計劃</h4>
+                ${actionPlans[bestKey].map(action => `
+                    <div class="action-item">${action}</div>
+                `).join('')}
+                <div style="margin-top: 15px; padding: 15px; background: rgba(255, 215, 0, 0.1); border-radius: 10px;">
+                    <strong>💡 額外建議：</strong> 無論選擇哪條路徑，持續學習和實作都是關鍵。建議加入相關技術社群，參與開源專案，並定期更新履歷展示您的成長。
+                </div>
+            `;
+            
+            // 高亮顯示推薦的職涯路徑
+            document.querySelectorAll('.career-path').forEach(path => {
+                path.classList.remove('highlight');
+            });
+            
+            if (bestKey === 'direct') {
+                document.querySelector('.special-path').classList.add('highlight');
+            } else if (bestKey === 'progressive') {
+                document.querySelectorAll('.career-path:not(.special-path)').forEach(path => {
+                    path.classList.add('highlight');
+                });
+            }
+            
+            resultDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
